@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SaiKumarm238/Jenkins-pipeline.git']])
+            }
+        }
+
+        stage('Install Python Requirements') {
+            steps {
+                sh "pip install -r requirements.txt"
+            }
+        }
+
+        stage('Python Test') {
+            steps {
+                sh "python3 -m pytest"
+            }
+        }
+    }
+}
